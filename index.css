@@ -1,0 +1,24 @@
+#myCanvas {
+    padding-left: 0;
+    padding-right: 0;
+    margin:auto;
+    display: block;
+    border:4px solid;
+    border-color: #d3d3d3;
+    background-color: white;
+
+}
+
+#score{
+	display: block;
+	margin-top: auto;
+	margin-bottom: auto;
+	width: 100px;
+	height: 70px;
+	font-size: 50px;
+}
+
+
+body{
+	background-color: #4F4A4A;
+}
