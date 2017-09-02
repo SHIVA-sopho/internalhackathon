@@ -1,128 +1,87 @@
 $(function(){
-
-var count=0;
-$('body').keypress(function(key){
-	    //event.preventDefault();
-	    
-		if(key.which===32){
-     	
-		hero.sense = -hero.sense;
-
-		check();
-		
-		count++;
-      	//console.log(count);
-		}
-		
-		
-});
-
-
-
-
 var game = Game();
-var passed =0;
-var checks =false;
-var hardgoal
 var ring = game['ring'];
 var hero = game['hero'];
 var score = game['score'];
-//var shadow = game['shadow'];
+var colors = ["yellow","red","blue","green"];
+var checks = false;
 ring.draw();
 hero.draw();
-//shadow.draw();
-var current_quad = 1;
-var goal_quad = 3;
 
+$('body').keypress(function(key){
+   	if(key.which===32){
+	hero.sense = -hero.sense;
+	check(hero.curr_track_col);
+	score.val++;
+	}
+});
 function repeatOften(){
 
-//console.log(start);
+	difference = ((simplify_angle(simplify_angle(hero.theta)-simplify_angle(ring.st_point))));
+	hero.curr_track_col = cal_col(difference);
+	if(hero.color == hero.curr_track_col)
+		checks = true;
 
+	if(checks==true){
+	
+		
+		if(lost(hero.curr_track_col)){
+		
+			alert('lost');
 
-//console.log('repeatoften called');
-current_quad = cal_quadrant(hero.center['x'],hero.center['y']);
-console.log(current_quad + "this is ");
-//console.log('current quad = '+current_quad + " goal_quad = "+goal_quad + "checks = "+checks);
-if(current_quad == goal_quad)
-	{checks = true;
-
+			restart();
+		}	
 	}
 
-if(checks==true)
-{
-	
-	if(lost(current_quad,goal_quad))
-	{
-		alert('chutiya..');
-		restart();
-	}	
-}
+	hero.move();
+	ring.move();
+    ctx.clearRect(0,0,600,600);
+    ring.draw();
+    hero.draw();
+	score.draw();
 
-
-
-
-hero.move();
-//shadow.move();
-ctx.clearRect(0,0,600,600);
-ring.draw();
-hero.draw();
-score.draw(count);
-
-requestAnimationFrame(repeatOften);
+	requestAnimationFrame(repeatOften);
 }
 
 repeatOften();
 
 
+function check(col) { 
 
-var colors = ["yellow","red","blue","green"];
-
-function check(){
-
-	var ball_color=hero.color;
-	
-	var theta = parseInt(Math.floor(2*simplify_angle(hero.theta)/(Math.PI)));
-
-	//console.log(colors[theta]);
-
-	if(hero.color!=colors[theta]){
-		alert("chutiya........");
+	if(hero.color != col){
+		alert("lost");
+		//window.prompt('want to play again');	
 	}
-
+  
 	else{
-		
-		//console.log('updated');
 		var randi=Math.floor(Math.random()*4)%4;
-		if(hero.color==colors[randi]){
+		if(hero.color==colors[randi])
 			randi=(randi+1)%4;
-		}
+		
 		hero.color=colors[randi];
-		goal_quad = randi+1;
+		goal_col = hero.color;
 		checks = false;
 	}
 
 }
 
-
-
-function simplify_angle(theta){
+function simplify_angle(theta) {
 	if(theta<0)
 	{
 	theta = theta*-1;
-	theta = (theta/(2*Math.PI) - parseInt(theta/(2*Math.PI)))*Math.PI*2;
+	theta = theta%( 2*Math.PI);
 	theta = 2*Math.PI - theta;
 	}
 	else
 	{
-		theta = (theta/(2*Math.PI) - parseInt(theta/(2*Math.PI)))*Math.PI*2;
+		theta = theta % (2*Math.PI);
 	}
 	return theta;
 }
 
-function lost(c_quad,g_quad)
-{    
+function lost(col) {    
 //console.log('c_quad = '+c_quad+' g_quad = '+g_quad)
-   if(c_quad != g_quad)
+   if(col != hero.color)
    	{
    		checks=false;
    		return true;
@@ -137,27 +96,10 @@ function lost(c_quad,g_quad)
 
 	    location.reload();
 	}
+	function cal_col(theta_diff) {
+		col = (Math.floor(((2*theta_diff)/Math.PI)))%4;
+		return colors[col];
 
-	function cal_quadrant(x0,y0){
-		var x1 = x0-300;
-		var y1 = (y0-300);
-		if(x1 >=0 )
-		{
-			if(y1>=0)
-				ans = 2;
-			else
-				ans = 1;
-
-		}
-		else
-		{
-			if(y1>0)
-				ans = 3;
-			else
-				ans = 4;
-		}
-		return ans;
-
-		}
+	}	
 
 })
