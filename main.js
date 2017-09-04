@@ -15,35 +15,50 @@ $('body').keypress(function(key){
 	score.val++;
 	}
 });
+
+
+var signal=false;
+$('body').keypress(function(key){
+	    //event.preventDefault();
+	    
+		if(key.which===13){
+     	signal=true;
+			document.getElementById("start").style.display = "none";
+			document.getElementById("myCanvas").style.display = "block";
+		}
+	});
+
+
 function repeatOften(){
+	if(signal) {
+		difference = ((simplify_angle(simplify_angle(hero.theta)-simplify_angle(ring.st_point))));
+		hero.curr_track_col = cal_col(difference);
+		if(hero.color == hero.curr_track_col)
+			checks = true;
 
-	difference = ((simplify_angle(simplify_angle(hero.theta)-simplify_angle(ring.st_point))));
-	hero.curr_track_col = cal_col(difference);
-	if(hero.color == hero.curr_track_col)
-		checks = true;
-
-	if(checks==true){
-	
+		if(checks==true){
 		
-		if(lost(hero.curr_track_col)){
-		
-			alert('lost');
+			
+			if(lost(hero.curr_track_col)){
+			
+				alert('lost');
 
-			restart();
-		}	
+				restart();
+			}	
+		}
+
+		hero.move();
+		ring.move();
+	    ctx.clearRect(0,0,600,600);
+	    ring.draw();
+	    hero.draw();
+		score.draw();
 	}
-
-	hero.move();
-	ring.move();
-    ctx.clearRect(0,0,600,600);
-    ring.draw();
-    hero.draw();
-	score.draw();
-
 	requestAnimationFrame(repeatOften);
+
 }
 
-repeatOften();
+	repeatOften();
 
 
 function check(col) { 
