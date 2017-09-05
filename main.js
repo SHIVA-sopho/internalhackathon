@@ -3,9 +3,11 @@ var game = Game();
 var ring = game['ring'];
 var hero = game['hero'];
 var score = game['score'];
+var speed = game['speed'];
 var colors = ["yellow","red","blue","green"];
 var checks = false;
 var signal=false;//for hit enter to start the game
+var speed_signal = false;
 
 var x=document.getElementById("countdown");//for ready steady go
 ring.draw();
@@ -23,7 +25,39 @@ $('body').keypress(function(key){
 });
 
 
+
+$('body').keydown(function(key){
+   	if(key.which===98){
+	speed.spd++;
+	
+	}
+});
+
+
+
+
+$('body').keydown(function(key){
+   	if(key.which===104){
+	speed.spd--;
+	}
+});
+
+
+$('body').keydown(function(key){
+   	if(key.which===27){
+	if(signal)
+		signal=false;
+	else
+		signal=true;
+	}
+});
+
+
+
+
 //keeps track of enter hit (also for countdown)
+
+
 
 
 $('body').keypress(function(key){
@@ -39,6 +73,10 @@ $('body').keypress(function(key){
     		setTimeout(function(){ x.style.display="none"}, 3000);
     		setTimeout(function(){ document.getElementById("score").style.display="block"}, 3000);
     		setTimeout(function(){ signal=true; }, 3000);
+    		setTimeout(function(){ speed_signal=true; }, 3000);
+
+
+
 
 
 		}
@@ -67,7 +105,13 @@ function repeatOften(){
 
 		hero.move();
 		ring.move(multiplier);
-	    ctx.clearRect(0,0,600,600);
+	    ctx.clearRect(0,0,600,600);}
+
+	    if(speed_signal){
+		speed.draw();}
+
+		if (signal){
+
 	    ring.draw();
 	    hero.draw();
 		score.draw();

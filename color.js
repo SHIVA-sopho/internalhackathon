@@ -3,8 +3,8 @@ var ctx = c.getContext("2d");
 var multiplier=1;
 var flag=0;
 var sign=1;
-var speed_hero;
-var speed_ring;
+//var speed_hero=40;
+var speed_ring=70;
 var level3;
 
 //level selectors controls the kind and speed of movement of ring and hero in differen levels
@@ -13,7 +13,7 @@ function prepare_level1(){
     document.getElementById("levels").style.display = "none";
     document.getElementById("start").style.display = "block";
     multiplier=0;
-    speed_hero=40;
+    //speed.val=40;
     speed_ring=50;
 }
 
@@ -21,7 +21,7 @@ function prepare_level2(){
     document.getElementById("levels").style.display = "none";
     document.getElementById("start").style.display = "block";
     multiplier=1;
-    speed_hero=40;
+    //speed.val=40;
     speed_ring=70;
 }
 
@@ -29,7 +29,7 @@ function prepare_level3(){
     document.getElementById("levels").style.display = "none";
     document.getElementById("start").style.display = "block";
     multiplier=1;
-    speed_hero=40;
+    //speed.val=40;
     speed_ring=70;
     level3=true;}
 //-------------------------------------------------------------------------------------------------
@@ -110,7 +110,7 @@ function Hero(params) {
     }
     this.move = function() {
         
-        var dtheta = Math.PI / speed_hero;
+        var dtheta = Math.PI / speed.spd;
         dtheta = dtheta * this.sense;
         this.center['x'] = 300 + (this.radius + ring.radius) * Math.sin(this.theta + dtheta);
         this.center['y'] = 80 + (this.radius + ring.radius) * (1 - Math.cos(this.theta + dtheta));
@@ -136,6 +136,13 @@ function score(value) {
 
 //---------------------------------------------------------------------------------------
 
+function speed(spd){
+    this.spd = spd;
+    this.draw = function(){
+        ctx.font = "30px Arial";
+        ctx.fillText("speed :" + (100-this.spd), 450, 40);
+    }
+}
 
 //game function send ring and hero object and score to msin .js
 function Game() {
@@ -146,10 +153,12 @@ function Game() {
         'theta': 3*Math.PI/2
     });
     this.score = new score(0);
+    this.speed = new speed(40)
     return {
         'ring': this.ring,
         'hero': this.hero,
-        'score': this.score
+        'score': this.score,
+        'speed': this.speed
     };
     
     
