@@ -8,6 +8,9 @@ var checks = false;
 ring.draw();
 hero.draw();
 
+
+
+
 $('body').keypress(function(key){
    	if(key.which===32){
 	hero.sense = -hero.sense;
@@ -15,6 +18,7 @@ $('body').keypress(function(key){
 	score.val++;
 	}
 });
+
 
 
 var signal=false;
@@ -48,11 +52,18 @@ function repeatOften(){
 		}
 
 		hero.move();
-		ring.move();
+		ring.move(multiplier);
 	    ctx.clearRect(0,0,600,600);
 	    ring.draw();
 	    hero.draw();
 		score.draw();
+
+
+		flag++;
+		if(flag>160){
+			flag=0;
+			sign=-sign;
+		}
 	}
 	requestAnimationFrame(repeatOften);
 

@@ -1,5 +1,38 @@
 var c = document.getElementById("myCanvas");
 var ctx = c.getContext("2d");
+var multiplier=1;
+var flag=0;
+var sign=1;
+var speed_hero;
+var speed_ring;
+var level3;
+
+
+
+function prepare_level1(){
+    document.getElementById("levels").style.display = "none";
+    document.getElementById("start").style.display = "block";
+    multiplier=0;
+    speed_hero=30;
+    speed_ring=50;
+}
+
+function prepare_level2(){
+    document.getElementById("levels").style.display = "none";
+    document.getElementById("start").style.display = "block";
+    multiplier=1;
+    speed_hero=40;
+    speed_ring=100;
+}
+
+function prepare_level3(){
+    document.getElementById("levels").style.display = "none";
+    document.getElementById("start").style.display = "block";
+    multiplier=1;
+    speed_hero=50;
+    speed_ring=80;
+    level3=true;
+}
 
 
 function Ring() {
@@ -35,9 +68,13 @@ function Ring() {
             end_point = end_point + 0.5 * Math.PI;
 
         }
-    this.move = function(){
-    	var dthetaR = -Math.PI / 80;
-    	this.st_point = this.st_point + dthetaR;
+    this.move = function(para){
+    	var dthetaR = para*(-Math.PI /speed_ring);
+        if(level3)
+    	this.st_point = this.st_point + sign*dthetaR;
+        else
+        this.st_point = this.st_point + dthetaR;
+
     }    
     };
 }
@@ -63,7 +100,7 @@ function Hero(params) {
     }
     this.move = function() {
         
-        var dtheta = Math.PI / 40;
+        var dtheta = Math.PI / speed_hero;
         dtheta = dtheta * this.sense;
         this.center['x'] = 300 + (this.radius + ring.radius) * Math.sin(this.theta + dtheta);
         this.center['y'] = 80 + (this.radius + ring.radius) * (1 - Math.cos(this.theta + dtheta));

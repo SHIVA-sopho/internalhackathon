@@ -20,6 +20,10 @@
 }
 
 #start{
+	display: none;
+}
+
+#levels{
 	display: block;
 }
 
