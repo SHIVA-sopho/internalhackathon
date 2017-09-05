@@ -5,11 +5,14 @@ var hero = game['hero'];
 var score = game['score'];
 var colors = ["yellow","red","blue","green"];
 var checks = false;
+var signal=false;//for hit enter to start the game
+
+var x=document.getElementById("countdown");//for ready steady go
 ring.draw();
 hero.draw();
 
 
-
+//keeps track of spacebar hit
 
 $('body').keypress(function(key){
    	if(key.which===32){
@@ -20,18 +23,29 @@ $('body').keypress(function(key){
 });
 
 
+//keeps track of enter hit (also for countdown)
 
-var signal=false;
+
 $('body').keypress(function(key){
-	    //event.preventDefault();
+	    
 	    
 		if(key.which===13){
-     	signal=true;
 			document.getElementById("start").style.display = "none";
 			document.getElementById("myCanvas").style.display = "block";
+
+			setTimeout(function(){ x.innerHTML="READY" }, 0);
+	     	setTimeout(function(){ x.innerHTML="STEADY",x.style.color="#F9F908" }, 1000);
+    		setTimeout(function(){ x.innerHTML="GO",x.style.color="#23D62B" }, 2000);
+    		setTimeout(function(){ x.style.display="none"}, 3000);
+    		setTimeout(function(){ document.getElementById("score").style.display="block"}, 3000);
+    		setTimeout(function(){ signal=true; }, 3000);
+
+
 		}
 	});
 
+
+//repeatOften function---------------------------------------------------------------
 
 function repeatOften(){
 	if(signal) {
@@ -71,12 +85,14 @@ function repeatOften(){
 
 	repeatOften();
 
+//--------------------------------------------------------------------------------
+
 
 function check(col) { 
 
 	if(hero.color != col){
 		alert("lost");
-		//window.prompt('want to play again');	
+		
 	}
   
 	else{
@@ -106,7 +122,7 @@ function simplify_angle(theta) {
 }
 
 function lost(col) {    
-//console.log('c_quad = '+c_quad+' g_quad = '+g_quad)
+
    if(col != hero.color)
    	{
    		checks=false;

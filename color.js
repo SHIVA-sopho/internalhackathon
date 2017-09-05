@@ -7,13 +7,13 @@ var speed_hero;
 var speed_ring;
 var level3;
 
-
+//level selectors controls the kind and speed of movement of ring and hero in differen levels
 
 function prepare_level1(){
     document.getElementById("levels").style.display = "none";
     document.getElementById("start").style.display = "block";
     multiplier=0;
-    speed_hero=30;
+    speed_hero=40;
     speed_ring=50;
 }
 
@@ -22,19 +22,21 @@ function prepare_level2(){
     document.getElementById("start").style.display = "block";
     multiplier=1;
     speed_hero=40;
-    speed_ring=100;
+    speed_ring=70;
 }
 
 function prepare_level3(){
     document.getElementById("levels").style.display = "none";
     document.getElementById("start").style.display = "block";
     multiplier=1;
-    speed_hero=50;
-    speed_ring=80;
-    level3=true;
-}
+    speed_hero=40;
+    speed_ring=70;
+    level3=true;}
+//-------------------------------------------------------------------------------------------------
 
 
+
+//contains property of ring
 function Ring() {
     this.center = {
         'x': 300,
@@ -79,6 +81,14 @@ function Ring() {
     };
 }
 
+
+//----------------------------------------------------------------------------------------------
+
+
+
+//properties of hero
+
+
 function Hero(params) {
 
     this.radius = 20;
@@ -110,6 +120,12 @@ function Hero(params) {
 
 }
 
+
+//-------------------------------------------------------------------------------------
+
+
+//score function
+
 function score(value) {
 	this.val = value ;
     this.draw = function() {
@@ -118,6 +134,10 @@ function score(value) {
     }
 }
 
+//---------------------------------------------------------------------------------------
+
+
+//game function send ring and hero object and score to msin .js
 function Game() {
     theta = 0;
     this.ring = new Ring();
@@ -133,6 +153,8 @@ function Game() {
     };
     
     
+
+
+
 }
-
-
+//-------------------------------------------------------------------------------------------

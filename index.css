@@ -11,7 +11,7 @@
 }
 
 #score{
-	display: block;
+	display: none;
 	margin-top: auto;
 	margin-bottom: auto;
 	width: 100px;
@@ -23,11 +23,21 @@
 	display: none;
 }
 
+#countdown{
+	display:block;
+	margin: auto;
+	width: 50px;
+	height: 20px;
+	font-size: 20px;
+	color: #F91208;
+
+}
+
 #levels{
 	display: block;
 }
 
 
 body{
-	background-color: #4F4A4A;
+	background-color: #23D6D3;
 }
