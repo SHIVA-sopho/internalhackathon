@@ -108,7 +108,10 @@ function repeatOften(){
 	    ctx.clearRect(0,0,600,600);}
 
 	    if(speed_signal){
-		speed.draw();}
+	    ctx.clearRect(400,0,200,60);
+			speed.draw();
+							}
+
 
 		if (signal){
 
