@@ -36,6 +36,9 @@
 #levels{
 	display: block;
 }
+#Rules{
+	display: none;
+}
 
 
 body{

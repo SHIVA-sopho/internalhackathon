@@ -6,32 +6,6 @@ var sign=1;
 //var speed_hero=40;
 var speed_ring=70;
 var level3;
-
-//level selectors controls the kind and speed of movement of ring and hero in differen levels
-
-function prepare_level1(){
-    document.getElementById("levels").style.display = "none";
-    document.getElementById("start").style.display = "block";
-    multiplier=0;
-    //speed.val=40;
-    speed_ring=50;
-}
-
-function prepare_level2(){
-    document.getElementById("levels").style.display = "none";
-    document.getElementById("start").style.display = "block";
-    multiplier=1;
-    //speed.val=40;
-    speed_ring=70;
-}
-
-function prepare_level3(){
-    document.getElementById("levels").style.display = "none";
-    document.getElementById("start").style.display = "block";
-    multiplier=1;
-    //speed.val=40;
-    speed_ring=70;
-    level3=true;}
 //-------------------------------------------------------------------------------------------------
 
 
@@ -54,16 +28,16 @@ function Ring() {
         for (var i = 0; i < 4; i++) {
 
             ctx.beginPath();
-            ctx.arc(ring.center['x'], ring.center['y'], ring.radius, this.st_point, end_point);
+            ctx.arc(this.center['x'], this.center['y'], this.radius, this.st_point, end_point);
             ctx.stroke();
-            ctx.lineTo(ring.center['x'], ring.center['y']);
-            ctx.fillStyle = ring.colors[i];
+            ctx.lineTo(this.center['x'], this.center['y']);
+            ctx.fillStyle = this.colors[i];
             ctx.fill();
 
             ctx.beginPath();
-            ctx.arc(ring.center['x'], ring.center['y'], ring.inner_radius, this.st_point, end_point);
+            ctx.arc(this.center['x'], this.center['y'], this.inner_radius, this.st_point, end_point);
             ctx.stroke();
-            ctx.lineTo(ring.center['x'], ring.center['y']);
+            ctx.lineTo(this.center['x'], this.center['y']);
             ctx.fillStyle = "white";
             ctx.fill();
             this.st_point = end_point;
@@ -126,7 +100,7 @@ function Hero(params) {
 
 //score function
 
-function score(value) {
+function Score(value) {
 	this.val = value ;
     this.draw = function() {
         ctx.font = "30px Arial";
@@ -136,7 +110,7 @@ function score(value) {
 
 //---------------------------------------------------------------------------------------
 
-function speed(spd){
+function Speed(spd){
     this.spd = spd;
     this.draw = function(){
         ctx.font = "30px Arial";
@@ -147,21 +121,39 @@ function speed(spd){
 //game function send ring and hero object and score to msin .js
 function Game() {
     theta = 0;
+    this.level;
+    this.start = false;
     this.ring = new Ring();
     this.hero = new Hero({
         'color': "blue",
         'theta': 3*Math.PI/2
     });
-    this.score = new score(0);
-    this.speed = new speed(40)
+    this.score = new Score(0);
+    this.speed = new Speed(40);
+    this.set_level = function(level) {
+        document.getElementById("levels").style.display = "none";
+        document.getElementById("start").style.display = "block";
+        document.getElementById("Rules").style.display = "block";
+        if(level==1){
+            multiplier = 0;
+            speed_ring = 50;
+        }
+        else
+        {
+            multiplier = 1;
+            speed_ring = 70;
+
+        }
+        if(level == 3)
+            level3=true;
+    };
     return {
         'ring': this.ring,
         'hero': this.hero,
         'score': this.score,
-        'speed': this.speed
+        'speed': this.speed,
+        'game' : this
     };
-    
-    
 
 
 
